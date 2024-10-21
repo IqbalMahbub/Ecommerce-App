@@ -17,6 +17,10 @@ class _CraftyBayState extends State<CraftyBay> {
     return GetMaterialApp(
       home: SplashScreen(),
       theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black
+        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style:ElevatedButton.styleFrom(
             fixedSize: Size.fromWidth(double.maxFinite),
