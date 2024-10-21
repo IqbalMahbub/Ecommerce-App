@@ -1,6 +1,12 @@
 import 'package:ecommerceapp/presentation/utility/assets_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../widgets/app_logo.dart';
+import 'HomeScreen.dart';
+import 'email_varificationScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,23 +17,30 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
+  void initState() {
+    super.initState();
+    _gotoNextScreen();
+  }
+ Future<void>  _gotoNextScreen()async {
+   await Future.delayed(const Duration(milliseconds: 5));
+    Get.to(()=>EmailVarificationScreen());
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Column(
           children: [
-            const Spacer(),
-            SvgPicture.asset(
-             AssetsPath.appLogoSvg,
-              width: 100,
-            ),
-            const Spacer(),
-            const CircularProgressIndicator(),
-            const SizedBox(
+            Spacer(),
+            AppLogo(),
+            Spacer(),
+            CircularProgressIndicator(),
+            SizedBox(
               height: 16,
             ),
-            const Text("Version  1.0.0"),
-            const SizedBox(
+            Text("Version  1.0.0"),
+            SizedBox(
               height: 16,
             ),
           ],
@@ -36,3 +49,4 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+
