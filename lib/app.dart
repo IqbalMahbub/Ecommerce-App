@@ -1,3 +1,4 @@
+import 'package:ecommerceapp/controller_binder.dart';
 import 'package:ecommerceapp/presentation/screens/splash_screen.dart';
 import 'package:ecommerceapp/presentation/utility/app_color.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +17,7 @@ class _CraftyBayState extends State<CraftyBay> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       home: SplashScreen(),
+      initialBinding:ControllerBinder() ,
       theme: ThemeData(
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(

@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../utility/app_color.dart';
 import '../utility/assets_path.dart';
 
 class PoductCard extends StatelessWidget {
   const PoductCard({
-    super.key,
+    super.key, this.showAddWishList=true,
   });
-
+final bool showAddWishList;
   @override
   Widget build(BuildContext context) {
     return Card(
+      surfaceTintColor:Colors.white ,
       elevation: 3,
       color: Colors.white,
       shape: RoundedRectangleBorder(
@@ -64,17 +66,7 @@ class PoductCard extends StatelessWidget {
                           Text('3.4'),
                         ],
                       ),
-                      Card(
-                        color: AppColores.primaryColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:BorderRadius.circular(4)
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(2.0),
-                          child: Icon(Icons.favorite_outline,
-                            size: 16,color: Colors.white,),
-                        ),
-                      )
+                      buildAddToWishButton()
                     ],
                   )
                 ],
@@ -85,4 +77,26 @@ class PoductCard extends StatelessWidget {
       ),
     );
   }
+
+  Widget buildAddToWishButton() {
+    return Visibility(
+                      visible: showAddWishList,
+                      replacement:_getIconButton(Icons.delete_outline),
+                      child:_getIconButton(Icons.favorite_outline),
+                    );
+  }
+  Widget _getIconButton(IconData icon){
+    return  Card(
+      color: AppColores.primaryColor,
+      shape: RoundedRectangleBorder(
+          borderRadius:BorderRadius.circular(4)
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(2.0),
+        child: Icon(icon,
+          size: 16,color: Colors.white,),
+      ),
+    );
+  }
+
 }

@@ -41,10 +41,17 @@ class _homeScreenState extends State<homeScreen> {
               const SizedBox(height: 10,),
               _buildCatagoryListView(),
               const SizedBox(height: 8,),
-              SectionHeader(title: 'Popular Products', onTapSeeAll: (){}),
+              SectionHeader(title: 'Popular', onTapSeeAll: (){}),
               const SizedBox(height: 10,),
-              PoductCard(),
-
+              _buildroductListView(),
+              const SizedBox(height: 8,),
+              SectionHeader(title: 'Special', onTapSeeAll: (){}),
+              const SizedBox(height: 10,),
+              _buildroductListView(),
+              const SizedBox(height: 8,),
+              SectionHeader(title: 'New', onTapSeeAll: (){}),
+              const SizedBox(height: 10,),
+              _buildroductListView(),
 
             ],
             
@@ -55,27 +62,44 @@ class _homeScreenState extends State<homeScreen> {
 
   }
 
-  Widget _buildCatagoryListView() {
-    return SizedBox(
-              height: 120,
-              child: ListView.separated(
 
-                scrollDirection: Axis.horizontal,
-                 itemCount: 8,
-                  itemBuilder: (contex,index){
-                   return const CatagoryItem();
-                  }, separatorBuilder: (BuildContext context, int index){
-                  return const SizedBox(width: 16,);
-              },
-              ),
-            );
-  }
   @override
   void dispose() {
     _searchTEController.dispose();
     super.dispose();
   }
+  Widget _buildCatagoryListView() {
+    return SizedBox(
+      height: 120,
+      child: ListView.separated(
 
+        scrollDirection: Axis.horizontal,
+        itemCount: 8,
+        itemBuilder: (contex,index){
+          return const CatagoryItem();
+        }, separatorBuilder: (BuildContext context, int index){
+        return const SizedBox(width: 16,);
+      },
+      ),
+    );
+  }
+
+
+  Widget _buildroductListView() {
+    return SizedBox(
+      height: 220,
+      child: ListView.separated(
+
+        scrollDirection: Axis.horizontal,
+        itemCount: 8,
+        itemBuilder: (contex,index){
+          return const PoductCard();
+        }, separatorBuilder: (BuildContext context, int index){
+        return const SizedBox(width: 16,);
+      },
+      ),
+    );
+  }
 
   Widget _buildSearchTextField() {
     return TextField(
