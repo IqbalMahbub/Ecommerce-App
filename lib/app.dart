@@ -17,10 +17,16 @@ class _CraftyBayState extends State<CraftyBay> {
     return GetMaterialApp(
       home: SplashScreen(),
       theme: ThemeData(
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: AppColores.primaryColor,
+          )
+        ),
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.white,
           foregroundColor: Colors.black
         ),
+
         elevatedButtonTheme: ElevatedButtonThemeData(
           style:ElevatedButton.styleFrom(
             fixedSize: Size.fromWidth(double.maxFinite),
@@ -33,9 +39,13 @@ class _CraftyBayState extends State<CraftyBay> {
             textStyle: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),
           ),
         ),
+
         inputDecorationTheme:_inputDecorationTheme(),
+
         textTheme:_textTheme(),
+
         colorSchemeSeed:AppColores.primaryColor,
+
         progressIndicatorTheme: const ProgressIndicatorThemeData(
           color: AppColores.primaryColor,
         )

@@ -3,10 +3,15 @@ import 'package:ecommerceapp/presentation/utility/app_color.dart';
 import 'package:ecommerceapp/presentation/utility/assets_path.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../widgets/app_bar_icon.dart';
+import '../widgets/catagory_item.dart';
+import '../widgets/home_carousel_slider.dart';
+import '../widgets/product_cart.dart';
+import '../widgets/section_header.dart';
 
 class homeScreen extends StatefulWidget {
   const homeScreen({super.key});
@@ -23,12 +28,23 @@ class _homeScreenState extends State<homeScreen> {
       appBar: _buildAppBar(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               _buildSearchTextField(),
-              SizedBox(height: 16,),
-              HomeCaroselSlider(),
+              const SizedBox(height: 16,),
+              const HomeCaroselSlider(),
+              const SizedBox(height: 16,),
+              SectionHeader(title: 'All Catagory',
+                onTapSeeAll: () {  }
+                ,),
+              const SizedBox(height: 10,),
+              _buildCatagoryListView(),
+              const SizedBox(height: 8,),
+              SectionHeader(title: 'Popular Products', onTapSeeAll: (){}),
+              const SizedBox(height: 10,),
+              PoductCard(),
+
 
             ],
             
@@ -39,25 +55,45 @@ class _homeScreenState extends State<homeScreen> {
 
   }
 
+  Widget _buildCatagoryListView() {
+    return SizedBox(
+              height: 120,
+              child: ListView.separated(
+
+                scrollDirection: Axis.horizontal,
+                 itemCount: 8,
+                  itemBuilder: (contex,index){
+                   return const CatagoryItem();
+                  }, separatorBuilder: (BuildContext context, int index){
+                  return const SizedBox(width: 16,);
+              },
+              ),
+            );
+  }
+  @override
+  void dispose() {
+    _searchTEController.dispose();
+    super.dispose();
+  }
+
+
   Widget _buildSearchTextField() {
     return TextField(
               controller:_searchTEController ,
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
+                prefixIcon: const Icon(Icons.search),
                 hintText: "Search",
                 filled: true,
                 fillColor: Colors.grey.shade200,
                 enabledBorder: OutlineInputBorder(borderSide: BorderSide
                     .none,borderRadius: BorderRadius.circular(8)),
-                focusedBorder: OutlineInputBorder(borderSide: BorderSide.none)
+                focusedBorder: const OutlineInputBorder(borderSide: BorderSide.none)
               ),
             );
   }
-@override
-  void dispose() {
-   _searchTEController.dispose();
-    super.dispose();
-  }
+
+
+
   AppBar _buildAppBar() {
     return AppBar(
       title: SvgPicture.asset(AssetsPath.HomeappLogoSvg),
@@ -71,77 +107,18 @@ class _homeScreenState extends State<homeScreen> {
       ],
     );
   }
+
+
 }
+// TOdo Refactor class
 
-class HomeCaroselSlider extends StatefulWidget {
-  const HomeCaroselSlider({
-    super.key,
-  });
 
-  @override
-  State<HomeCaroselSlider> createState() => _HomeCaroselSliderState();
-}
 
-class _HomeCaroselSliderState extends State<HomeCaroselSlider> {
-  final ValueNotifier<int> _selectedPageIndex =ValueNotifier(0);
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildCarouselSlider(),
-        _buildValueListenableBuilder()
 
-      ],
-    );
-  }
 
-  ValueListenableBuilder<int> _buildValueListenableBuilder() {
-    return ValueListenableBuilder(
-        valueListenable: _selectedPageIndex,
-        builder: (context,currentPage,_){
-        return  Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            for(int i=0;i<5;i++)
-              Container(
-                height: 15,
-                width: 15,
-                margin: EdgeInsets.symmetric(horizontal: 2),
-                decoration: BoxDecoration(
-                  color: i==currentPage?AppColores.primaryColor:null,
-                    border:Border.all(color: i==currentPage?AppColores
-                        .primaryColor:Colors.grey,
-                    width: 1),borderRadius: BorderRadius.circular(50) ),
-              )
-          ],
-        );
-  }
-      );
-  }
 
-  CarouselSlider _buildCarouselSlider() {
-    return CarouselSlider(
-        options: CarouselOptions(height: 180.0,viewportFraction: 1,
-    onPageChanged:(index, _){
-      _selectedPageIndex.value=index;
-    } ),
-        items: [1,2,3,4,5].map((i) {
-          return Builder(
-            builder: (BuildContext context) {
-              return Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(horizontal: 5,vertical: 10),
-                  decoration: BoxDecoration(
-                      color: AppColores.primaryColor,
-                    borderRadius: BorderRadius.circular(8)
-                  ),
-                  alignment: Alignment.center,
-                  child: Text('text $i', style: TextStyle(fontSize: 16.0),)
-              );
-            },
-          );
-        }).toList(),
-      );
-  }
-}
+
+
+
+
