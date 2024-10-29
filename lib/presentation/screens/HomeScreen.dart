@@ -1,14 +1,14 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:ecommerceapp/presentation/utility/app_color.dart';
+import 'package:ecommerceapp/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerceapp/presentation/utility/assets_path.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:get/get.dart';
 import '../widgets/app_bar_icon.dart';
 import '../widgets/catagory_item.dart';
+import '../widgets/centered_circular_progress.dart';
 import '../widgets/home_carousel_slider.dart';
 import '../widgets/product_cart.dart';
 import '../widgets/section_header.dart';
@@ -16,12 +16,16 @@ import '../widgets/section_header.dart';
 class homeScreen extends StatefulWidget {
   const homeScreen({super.key});
 
+
   @override
   State<homeScreen> createState() => _homeScreenState();
 }
 
 class _homeScreenState extends State<homeScreen> {
+
   final TextEditingController _searchTEController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +37,18 @@ class _homeScreenState extends State<homeScreen> {
             children: [
               _buildSearchTextField(),
               const SizedBox(height: 16,),
-              const HomeCaroselSlider(),
+              GetBuilder<HomeSliderController>(
+                builder: (sliderController) {
+                  if(sliderController.inProgress){
+                    return SizedBox(
+                      height: 200,
+                      child: CenterdCircularProgressIndicator()
+                    );
+                  }
+                  return HomeCaroselSlider(sliderLisr: sliderController
+                        .siderList,);
+                }
+              ),
               const SizedBox(height: 16,),
               SectionHeader(title: 'All Catagory',
                 onTapSeeAll: () {  }

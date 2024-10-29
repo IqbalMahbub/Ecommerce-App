@@ -3,13 +3,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../data/models/slider_data.dart';
 import '../utility/app_color.dart';
 
 class HomeCaroselSlider extends StatefulWidget {
   const HomeCaroselSlider({
-    super.key,
+    super.key, required this.sliderLisr,
   });
-
+  final List<SliderData> sliderLisr;
   @override
   State<HomeCaroselSlider> createState() => _HomeCaroselSliderState();
 }
@@ -35,7 +36,7 @@ class _HomeCaroselSliderState extends State<HomeCaroselSlider> {
           return  Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              for(int i=0;i<5;i++)
+              for(int i=0;i<widget.sliderLisr.length;i++)
                 Container(
                   height: 15,
                   width: 15,
@@ -58,7 +59,7 @@ class _HomeCaroselSliderState extends State<HomeCaroselSlider> {
           onPageChanged:(index, _){
             _selectedPageIndex.value=index;
           } ),
-      items: [1,2,3,4,5].map((i) {
+      items:widget.sliderLisr.map((i) {
         return Builder(
           builder: (BuildContext context) {
             return Container(

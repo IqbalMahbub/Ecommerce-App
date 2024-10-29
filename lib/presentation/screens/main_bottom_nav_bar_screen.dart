@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../state_holders/home_slider_controller.dart';
 import '../widgets/wish_list_screen.dart';
 import 'HomeScreen.dart';
 import 'cart_screen.dart';
@@ -25,6 +26,13 @@ final List<Widget> _screen =const[
   CartListScreen(),
   WishListScreen(),
 ];
+
+@override
+void initState() {
+  super.initState();
+  Get.find<HomeSliderController>().getSliders();
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
