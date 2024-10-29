@@ -73,7 +73,7 @@ class _CartListScreenState extends State<CartListScreen> {
           );
   }
 
-  Column _totalPriceWidget() {
+  Widget _totalPriceWidget() {
     return const Column(
                 children: [
                   Text('Total Price',style: TextStyle(fontWeight:
