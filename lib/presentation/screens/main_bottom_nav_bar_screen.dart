@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../state_holders/category_list_controller.dart';
 import '../state_holders/home_slider_controller.dart';
 import '../widgets/wish_list_screen.dart';
 import 'HomeScreen.dart';
@@ -31,6 +32,7 @@ final List<Widget> _screen =const[
 void initState() {
   super.initState();
   Get.find<HomeSliderController>().getSliders();
+  Get.find<CategoryListController>().getCategoryList();
 }
 
   @override

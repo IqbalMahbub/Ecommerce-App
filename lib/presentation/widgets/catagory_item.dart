@@ -1,20 +1,20 @@
+import 'package:ecommerceapp/presentation/widgets/network_image_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
+import '../../data/models/category.dart';
 import '../screens/product_list_screen.dart';
 import '../utility/app_color.dart';
 
 class CatagoryItem extends StatelessWidget {
   const CatagoryItem({
-    super.key,
+    super.key, required this.catagory,
   });
-
+  final Category catagory;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Get.to(()=>ProductListScreen(categoryName:'Electronics'));
+        Get.to(()=>ProductListScreen(categoryName:catagory.categoryName?? ""));
       },
       child: Column(
         children: [
@@ -24,13 +24,22 @@ class CatagoryItem extends StatelessWidget {
               color: AppColores.primaryColor.withOpacity(0.12),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(CupertinoIcons.desktopcomputer,size: 40,
-              color: AppColores.primaryColor,),
-          ),
+            child:NetworkImageWidget(
+              url: catagory.categoryImg ?? "",
+              height: 30,
+                widget: 30,
+          ),),
           SizedBox(height: 8,),
-          Text('Electronics',style: TextStyle(fontSize: 16,color:
-          AppColores.primaryColor,fontWeight: FontWeight.w500,
-              letterSpacing:0.4 ),)
+          Text(
+            catagory.categoryName ?? " ",
+            maxLines: 1,
+            overflow:TextOverflow.ellipsis ,
+            style: const TextStyle(
+                fontSize: 16,
+                color: AppColores.primaryColor,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.4),
+          )
         ],
       ),
     );

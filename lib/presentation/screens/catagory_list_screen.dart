@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../state_holders/category_list_controller.dart';
 import '../state_holders/main_bottom_nav_bar_cntroller.dart';
 
 class CatagoryListScreen extends StatefulWidget {
@@ -18,29 +19,39 @@ class _CatagoryListScreenState extends State<CatagoryListScreen> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (_){
+      onPopInvoked: (_) {
         Get.find<MainBottomNavBarController>().backToHome();
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Catagory List'),
+            title: const Text('Catagory List'),
             leading: IconButton(
-                onPressed: (){
+                onPressed: () {
                   Get.find<MainBottomNavBarController>().backToHome();
                 },
-                icon: Icon(Icons.arrow_back_ios_new_sharp))
-        ),
-        body: GridView.builder(
-          itemCount: 15,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount
-              (crossAxisCount: 4,childAspectRatio: 0.75),
-      itemBuilder: (context,indexconst ){
-              return const Padding(
-           padding: EdgeInsets.all(8.0),
-                child: FittedBox(child: CatagoryItem()),
-              );
-      }
-        ),
+                icon: Icon(Icons.arrow_back_ios_new_sharp))),
+        body: GetBuilder<CategoryListController>(
+            builder: (categoryListController) {
+          if (categoryListController.inProgress) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          return RefreshIndicator(
+            onRefresh: categoryListController.getCategoryList,
+            child: GridView.builder(
+                itemCount: categoryListController.categoryList.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4, childAspectRatio: 0.75),
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CatagoryItem(
+                      catagory: categoryListController.categoryList[index],
+                    ),
+                  );
+                }),
+          );
+        }),
       ),
     );
   }

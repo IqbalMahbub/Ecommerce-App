@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import '../../data/models/network_responce.dart';
 import '../../data/models/slider_list_model.dart';
 import '../../data/network_caller/network_caller.dart';
-import '../../data/utility/uris.dart';
+import '../../data/utility/urls.dart';
 
 class HomeSliderController extends GetxController {
   bool _inProgress = false;

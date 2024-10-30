@@ -39,6 +39,7 @@ dependencies:
   counter_button: ^1.0.1
   item_count_number_button: ^1.9.2
   http: ^1.2.2
+  cached_network_image: ^3.3.1
 
 
 
