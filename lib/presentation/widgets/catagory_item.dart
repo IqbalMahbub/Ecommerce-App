@@ -7,14 +7,20 @@ import '../utility/app_color.dart';
 
 class CatagoryItem extends StatelessWidget {
   const CatagoryItem({
-    super.key, required this.catagory,
+    super.key,
+    required this.catagory,
   });
+
   final Category catagory;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Get.to(()=>ProductListScreen(categoryName:catagory.categoryName?? ""));
+      onTap: () {
+        Get.to(() => ProductListScreen(
+              categoryName: catagory.categoryName ?? "",
+              categoryId: catagory.id!,
+            ));
       },
       child: Column(
         children: [
@@ -24,16 +30,19 @@ class CatagoryItem extends StatelessWidget {
               color: AppColores.primaryColor.withOpacity(0.12),
               borderRadius: BorderRadius.circular(8),
             ),
-            child:NetworkImageWidget(
+            child: NetworkImageWidget(
               url: catagory.categoryImg ?? "",
               height: 30,
-                widget: 30,
-          ),),
-          SizedBox(height: 8,),
+              widget: 30,
+            ),
+          ),
+          SizedBox(
+            height: 8,
+          ),
           Text(
             catagory.categoryName ?? " ",
             maxLines: 1,
-            overflow:TextOverflow.ellipsis ,
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
                 fontSize: 16,
                 color: AppColores.primaryColor,

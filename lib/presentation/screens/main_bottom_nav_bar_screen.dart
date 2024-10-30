@@ -6,6 +6,9 @@ import 'package:get/get.dart';
 
 import '../state_holders/category_list_controller.dart';
 import '../state_holders/home_slider_controller.dart';
+import '../state_holders/new_product_list_controller.dart';
+import '../state_holders/popular_product_list_controller.dart';
+import '../state_holders/special_product_list_controller.dart';
 import '../widgets/wish_list_screen.dart';
 import 'HomeScreen.dart';
 import 'cart_screen.dart';
@@ -33,6 +36,10 @@ void initState() {
   super.initState();
   Get.find<HomeSliderController>().getSliders();
   Get.find<CategoryListController>().getCategoryList();
+  Get.find<PopularProductListController>().getPopularProductList();
+  Get.find<NewProductListController>().getNewProductList();
+  Get.find<SpecialProductListController>().getSpecialProductList();
+
 }
 
   @override

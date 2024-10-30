@@ -4,20 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
+import '../../data/models/product.dart';
 import '../screens/product_details_screen.dart';
 import '../utility/app_color.dart';
 import '../utility/assets_path.dart';
 
 class PoductCard extends StatelessWidget {
   const PoductCard({
-    super.key, this.showAddWishList=true,
+    super.key, this.showAddWishList=true, required this.product,
   });
 final bool showAddWishList;
+final Product product;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Get.to(()=>ProductDetailsScreen());
+        Get.to(()=>  ProductDetailsScreen(productId:product.id!));
       },
       child: Card(
         surfaceTintColor:Colors.white ,
@@ -32,45 +34,48 @@ final bool showAddWishList;
             children: [
               Container(
                 width: 150,
+                height: 120,
                 decoration: BoxDecoration(
                   color: AppColores.primaryColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8),
                       topRight: Radius.circular(8)
                   ),
                 ),
                 child:Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(AssetsPath.productDummyImgPng),
+                  child: Image.network(product.image??'')),
                 ),
-              ),
+
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Nike Sport Shoe 320K Special Esition ",maxLines:1
-                      ,style: TextStyle(
+                    Text(
+                      product.title?? '',
+                      maxLines: 1,
+                      style: const TextStyle(
                           overflow: TextOverflow.ellipsis,
                           fontSize: 16,
                           color: Colors.grey,
-                          fontWeight: FontWeight.w500
-                      ),),
+                          fontWeight: FontWeight.w500),
+                    ),
                     Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
                       spacing:10 ,
                       alignment: WrapAlignment.start,
                       children: [
-                        Text('\$30',style: TextStyle(
+                        Text('\$${product.price}',style: const TextStyle(
                             fontWeight:FontWeight.w600,
                             fontSize: 16,
                             color: AppColores.primaryColor
                         ),),
                         Wrap(
                           children: [
-                            Icon(Icons.star,color: Colors.amber,size:
+                            const Icon(Icons.star,color: Colors.amber,size:
                             20,) ,
-                            Text('3.4'),
+                            Text('${product.star}'),
                           ],
                         ),
                        WishButton(showAddWishList: showAddWishList,)

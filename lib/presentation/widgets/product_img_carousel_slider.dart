@@ -7,9 +7,9 @@ import '../utility/app_color.dart';
 
 class ProductImgCaroselSlider extends StatefulWidget {
   const ProductImgCaroselSlider({
-    super.key,
+    super.key, required this.images,
   });
-
+final List<String> images;
   @override
   State<ProductImgCaroselSlider> createState() =>
       _ProductImgCaroselSliderState();
@@ -43,7 +43,7 @@ class _ProductImgCaroselSliderState extends State<ProductImgCaroselSlider> {
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              for (int i = 0; i < 5; i++)
+              for (int i = 0; i <widget.images.length; i++)
                 Container(
                   height: 12,
                   width: 12,
@@ -72,17 +72,15 @@ class _ProductImgCaroselSliderState extends State<ProductImgCaroselSlider> {
           onPageChanged: (index, _) {
             _selectedPageIndex.value = index;
           }),
-      items: [1, 2, 3, 4, 5].map((i) {
+      items:widget.images.map((image) {
         return Builder(
           builder: (BuildContext context) {
             return Container(
                 width: MediaQuery.of(context).size.width,
                 color: Colors.grey.shade300,
                 alignment: Alignment.center,
-                child: Text(
-                  'text $i',
-                  style: TextStyle(fontSize: 16.0),
-                ));
+                child:Image.network(image,fit:BoxFit.cover)
+            );
           },
         );
       }).toList(),

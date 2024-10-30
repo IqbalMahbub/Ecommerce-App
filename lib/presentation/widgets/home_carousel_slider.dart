@@ -50,7 +50,7 @@ class _HomeCaroselSliderState extends State<HomeCaroselSlider> {
                   color: AppColores.primaryColor,
                   borderRadius: BorderRadius.circular(8)),
               alignment: Alignment.center,
-              child: Row(
+              child: Stack(
                 children: [
                   Expanded(
                     child: ClipRRect(
@@ -91,11 +91,14 @@ class _HomeCaroselSliderState extends State<HomeCaroselSlider> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          Text(
-            slider.shortDes ?? '',
-            maxLines: 3,
-            style: const TextStyle(
-                color: Colors.black, overflow: TextOverflow.ellipsis),
+          Container(
+            width: 200,
+            child: Text(
+              slider.shortDes ?? '',
+              maxLines: 3,
+              style: const TextStyle(
+                  color: Colors.black, overflow: TextOverflow.ellipsis),
+            ),
           ),
           const SizedBox(height: 8),
           SizedBox(
