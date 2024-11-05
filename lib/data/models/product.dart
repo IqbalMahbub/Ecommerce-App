@@ -1,5 +1,5 @@
 
-import 'brand (1).dart';
+import 'brand.dart';
 import 'category.dart';
 
 class Product {

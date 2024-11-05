@@ -1,63 +1,104 @@
+import 'package:ecommerceapp/presentation/state_holders/verify_otp_controller.dart';
 import 'package:ecommerceapp/presentation/utility/app_color.dart';
+import 'package:ecommerceapp/presentation/widgets/snack_massege.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../widgets/app_logo.dart';
+import '../widgets/centered_circular_progress.dart';
 import 'complete_profile_Screen.dart';
 
-class OtpVarificationScreen extends StatefulWidget {
-final String email;
+class OtpVerificationScreen extends StatefulWidget {
+  final String email;
 
-  const OtpVarificationScreen({super.key,required this.email});
+  const OtpVerificationScreen({super.key, required this.email});
 
   @override
-  State<OtpVarificationScreen> createState() => _OtpVarificationScreenState();
+  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
 }
 
-class _OtpVarificationScreenState extends State<OtpVarificationScreen> {
-  final TextEditingController _OTPTEController = TextEditingController();
+class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
+  final TextEditingController _otpTEController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: [
-            const SizedBox(height: 100,),
-            const AppLogo(),
-            const SizedBox(height: 16,),
-            Text("Enter OTP Code", style: textTheme.titleLarge,),
-            const SizedBox(height: 4,),
-            Text("A 6 digit OTP has been sent to your Email", style: textTheme.headlineSmall,),
-            const SizedBox(height: 16,),
-            _buildPinField(),
-            const SizedBox(height: 16,),
-            SizedBox(height: 40,
-              child: ElevatedButton(onPressed: () {
-                    Get.to(()=>CompleteProfileScreen());
-                  }, child: const Text('Next')),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              children: [
+                const SizedBox(height: 100),
+                const AppLogo(),
+                const SizedBox(height: 16),
+                Text('Enter OTP Code', style: textTheme.headlineLarge),
+                const SizedBox(height: 4),
+                Text('A 4 digit OTP code has been sent',
+                    style: textTheme.headlineSmall),
+                const SizedBox(height: 24),
+                _buildPinField(),
+                const SizedBox(height: 16),
+                GetBuilder<VerifyOtpController>(builder: (verifyOtpController) {
+                  if (verifyOtpController.inProgress) {
+                    return const CenterdCircularProgressIndicator();
+                  }
+
+                  return ElevatedButton(
+                    onPressed: () async {
+                      final result = await verifyOtpController.verifyOtp(
+                          widget.email, _otpTEController.text);
+                      if (result) {
+                        // TODO: Pending in next 30th May, 2024
+                        // 1. If success, then call another api named "readProfile"
+                        //   a. Create Read profile controller
+                        // 2. check if data is "null" or not, if null then move to the
+                        //    Complete profile screen, then move to home page
+                        //    a. Create complete profile controller
+                        // 3. Otherwise back to the home page
+                        Get.to(() => const CompleteProfileScreen());
+                      } else {
+                        if (mounted) {
+                          showSnackMassage(
+                              context, verifyOtpController.errorMessage);
+                        }
+                      }
+                    },
+                    child: const Text('Next'),
+                  );
+                }),
+                const SizedBox(height: 24),
+                _buildResendCodeMessage(),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text('Resend Code'),
+                )
+              ],
             ),
-            const SizedBox(height: 16,),
-            _buildRichText(),
-            TextButton(onPressed: () {}, child: const Text("Resend code"))
-          ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildRichText() {
+  Widget _buildResendCodeMessage() {
     return RichText(
-        text: const TextSpan(
-            style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
-            children: [
-          TextSpan(text: 'This code will expair in '),
+      text: const TextSpan(
+        style: TextStyle(
+          color: Colors.grey,
+          fontWeight: FontWeight.w500,
+        ),
+        children: [
+          TextSpan(text: 'This code will expire in '),
+          // TODO: complete this count down
           TextSpan(
               text: '100s', style: TextStyle(color: AppColores.primaryColor)),
-        ]));
+        ],
+      ),
+    );
   }
 
   Widget _buildPinField() {
@@ -77,14 +118,14 @@ class _OtpVarificationScreenState extends State<OtpVarificationScreen> {
       ),
       animationDuration: const Duration(milliseconds: 300),
       enableActiveFill: true,
-      controller: _OTPTEController,
+      controller: _otpTEController,
       appContext: context,
     );
   }
 
   @override
   void dispose() {
-    _OTPTEController.dispose();
+    _otpTEController.dispose();
     super.dispose();
   }
 }

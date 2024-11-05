@@ -78,7 +78,7 @@ final Product product;
                             Text('${product.star}'),
                           ],
                         ),
-                       WishButton(showAddWishList: showAddWishList,)
+                     //  WishButton(showAddWishList: showAddWishList,onTap: ,)
                       ],
                     )
                   ],
