@@ -38,7 +38,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
               itemBuilder: (context,index){
                 return  Padding(
                   padding: EdgeInsets.symmetric(horizontal: 4,vertical: 4),
-                  child: FittedBox(child:PoductCard(product:productListByCategoryController.productList[index]),
+                  child: FittedBox(child:PoductCard(product:productListByCategoryController.productList[index],),
                   ),
                 );
               }

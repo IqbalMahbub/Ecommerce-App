@@ -1,5 +1,6 @@
 import 'package:ecommerceapp/presentation/state_holders/add_to_cart_controller.dart';
 import 'package:ecommerceapp/presentation/state_holders/add_to_wish_list_controller.dart';
+import 'package:ecommerceapp/presentation/state_holders/cart_list_controller%20(1).dart';
 import 'package:ecommerceapp/presentation/state_holders/category_list_controller.dart';
 import 'package:ecommerceapp/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerceapp/presentation/state_holders/main_bottom_nav_bar_cntroller.dart';
@@ -31,6 +32,7 @@ class ControllerBinder extends Bindings{
    Get.put(AddToWishListController());
    Get.put(ReadProfileController());
    Get.put(WishListController());
+   Get.put(CartListController());
   }
 
 }

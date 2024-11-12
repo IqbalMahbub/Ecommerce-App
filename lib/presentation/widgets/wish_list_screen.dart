@@ -1,3 +1,5 @@
+import 'package:ecommerceapp/presentation/state_holders/wish_list_controller.dart';
+import 'package:ecommerceapp/presentation/widgets/centered_circular_progress.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +18,11 @@ class WishListScreen extends StatefulWidget {
 
 class _WishListScreenState extends State<WishListScreen> {
   @override
+  void initState() {
+    super.initState();
+    Get.find<WishListController>().getWishList();
+  }
+  @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
@@ -29,19 +36,33 @@ class _WishListScreenState extends State<WishListScreen> {
               Get.find<MainBottomNavBarController>().backToHome();
             },
             icon: Icon(Icons.arrow_back_ios_new_sharp)),),
-        body: GridView.builder(
-            itemCount: 15,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount
-              (crossAxisCount: 3,childAspectRatio: 0.8),
-            itemBuilder: (context,indexconst ){
-              return const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4,vertical: 4),
-                child: FittedBox(
-                  //   child: PoductCard(showAddWishList: false,
-                  // product:,)
-                ),
-              );
+        body: GetBuilder<WishListController>(
+          builder: (wishListController) {
+            if(wishListController.inProgress){
+              return const CenterdCircularProgressIndicator();
             }
+            return RefreshIndicator(
+              onRefresh: () async{
+                wishListController.getWishList();
+              },
+              child: GridView.builder(
+                  itemCount: wishListController.wishList.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount
+                    (crossAxisCount: 3,childAspectRatio: 0.8),
+                  itemBuilder: (context,index){
+                    return  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4,vertical: 4),
+                      child: FittedBox(
+                          child: PoductCard(
+                            showAddToWishlist: false,
+                            product:wishListController.wishList[index].product!,
+                          )
+                      ),
+                    );
+                  }
+              ),
+            );
+          }
         ),
       ),
     );

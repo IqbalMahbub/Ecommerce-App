@@ -10,77 +10,81 @@ import '../utility/app_color.dart';
 import '../utility/assets_path.dart';
 
 class PoductCard extends StatelessWidget {
-  const PoductCard({
-    super.key, this.showAddWishList=true, required this.product,
-  });
-final bool showAddWishList;
-final Product product;
+  const PoductCard(
+      {super.key, this.showAddToWishlist = true, required this.product,});
+
+  final bool showAddToWishlist;
+  final Product product;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Get.to(()=>  ProductDetailsScreen(productId:product.id!));
+      onTap: () {
+        Get.to(() => ProductDetailsScreen(productId: product.id!));
       },
       child: Card(
-        surfaceTintColor:Colors.white ,
         elevation: 3,
+        surfaceTintColor: Colors.white,
         color: Colors.white,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8)
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         child: SizedBox(
           width: 150,
           child: Column(
             children: [
               Container(
                 width: 150,
-                height: 120,
                 decoration: BoxDecoration(
-                  color: AppColores.primaryColor.withOpacity(0.1),
-                  borderRadius: const BorderRadius.only(
+                    color: AppColores.primaryColor.withOpacity(0.1),
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8)
+                      topRight: Radius.circular(8),
+                    )),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.network(
+                      product.image ?? ''
                   ),
                 ),
-                child:Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.network(product.image??'')),
-                ),
-
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product.title?? '',
-                      maxLines: 1,
+                      product.title ?? '',
+                      maxLines: 2,
                       style: const TextStyle(
                           overflow: TextOverflow.ellipsis,
-                          fontSize: 16,
+                          fontSize: 13,
                           color: Colors.grey,
                           fontWeight: FontWeight.w500),
                     ),
                     Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing:10 ,
+                      spacing: 5,
                       alignment: WrapAlignment.start,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        Text('\$${product.price}',style: const TextStyle(
-                            fontWeight:FontWeight.w600,
-                            fontSize: 16,
-                            color: AppColores.primaryColor
-                        ),),
+                        Text(
+                          '\$${product.price}',
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: AppColores.primaryColor),
+                        ),
                         Wrap(
                           children: [
-                            const Icon(Icons.star,color: Colors.amber,size:
-                            20,) ,
-                            Text('${product.star}'),
+                            const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                              size: 20,
+                            ),
+                            Text('${product.star}')
                           ],
                         ),
-                     //  WishButton(showAddWishList: showAddWishList,onTap: ,)
+                        // WishButton(showAddToWishlist: showAddToWishlist),
                       ],
-                    )
+                    ),
                   ],
                 ),
               )
@@ -90,7 +94,4 @@ final Product product;
       ),
     );
   }
-
-
-
 }

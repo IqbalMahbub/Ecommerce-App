@@ -20,7 +20,9 @@ import '../widgets/size_picker.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key, required this.productId});
-final int productId;
+
+  final int productId;
+
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
 }
@@ -29,189 +31,122 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int _counterValue = 1;
   String? _selectedColor;
   String? _selectedSize;
-@override
+
+  @override
   void initState() {
     super.initState();
     Get.find<ProductDetailsController>().getProductDetails(widget.productId);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Product Details"),
-        leading: IconButton(
-            onPressed: () {
-              Get.find<MainBottomNavBarController>().backToHome();
-            },
-            icon: const Icon(Icons.arrow_back_ios_new_sharp)),
+        title: const Text('Product Details'),
       ),
       body: GetBuilder<ProductDetailsController>(
-        builder: (productDetailsController) {
-          if(productDetailsController.inProgress){
-            return const CenterdCircularProgressIndicator();
-          }
-          if(productDetailsController.errorMessage.isNotEmpty){
-            return Center(
-              child: Text(productDetailsController.errorMessage),
-            );
-          }
+          builder: (productDetailController) {
+            if (productDetailController.inProgress) {
+              return const CenterdCircularProgressIndicator();
+            }
 
-          ProductDetailsModel productDetails =productDetailsController
-              .productDetailsModel;
-         List<String> colors= productDetails.size!.split(',')
-              ?? [] ;
-          List<String> sizes= productDetails.size!.split(',')
-              ?? [] ;
-          _selectedSize=sizes.first;
-          _selectedColor=colors.first;
+            if (productDetailController.errorMessage.isNotEmpty) {
+              return Center(
+                child: Text(productDetailController.errorMessage),
+              );
+            }
 
-          return Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ProductImgCaroselSlider(
-                        images: [
-                          productDetails.img1 ?? "",
-                          productDetails.img2 ?? "",
-                          productDetails.img3 ?? "",
-                          productDetails.img4 ?? "",
+            ProductDetailsModel productDetails =
+                productDetailController.productDetailsModel;
+            List<String> colors = productDetails.color?.split(',') ?? [];
+            List<String> sizes = productDetails.size?.split(',') ?? [];
+            _selectedSize = sizes.first;
+            _selectedColor = colors.first;
 
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                    child: Text(
-                                        productDetails.product?.title ?? "" ,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black.withOpacity(0.8),
-                                  ),
-                                )),
-                                _builtitemCount(),
-                              ],
-                            ),
-                            _buildReviewsAndFavorite(productDetails),
-                            const SizedBox(
-                              height: 16,
-                            ),
-
-                            const Text(
-                              'Color',
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            SizePicker(size:colors,
-                              onChange: (String s) {
-                              _selectedColor=s;
-                              },
-                              isRounded: false,
-
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            const Text(
-                              'Size',
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            SizePicker(size:sizes,
-                              onChange:
-                                (String s) {
-                              _selectedSize=s;
-                                },),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            const Text(
-                              'Description',
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Text(productDetails.product?.shortDes??''),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            Text(productDetails.des??''),
+            return Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ProductImgCaroselSlider(
+                          images: [
+                            productDetails.img1 ?? '',
+                            productDetails.img2 ?? '',
+                            productDetails.img3 ?? '',
+                            productDetails.img4 ?? '',
                           ],
                         ),
-                      )
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                      child: Text(
+                                        productDetails.product?.title ?? '',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black.withOpacity(0.8)),
+                                      )),
+                                  _buildCounter()
+                                ],
+                              ),
+                              _buildReviewSection(productDetails),
+                              const Text(
+                                'Color',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 16),
+                              ),
+                              const SizedBox(height: 16),
+                              SizePicker(
+                                size: colors,
+                                onChange: (String s) {
+                                  _selectedColor = s;
+                                },
+                                isRounded: false,
+                              ),
+                              const SizedBox(height: 16),
+                              const Text(
+                                'Size',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 16),
+                              ),
+                              const SizedBox(height: 16),
+                              SizePicker(
+                                size: sizes,
+                                onChange: (String s) {
+                                  _selectedSize = s;
+                                },
+                              ),
+                              const SizedBox(height: 16),
+                              const Text(
+                                'Description',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 16),
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                productDetails.product?.shortDes ?? '',
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                productDetails.des ?? '',
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                child: _buildAddToCartSection(productDetails),
-              )
-            ],
-          );
-        }
-      ),
-    );
-  }
-
-  Widget _buildReviewsAndFavorite(ProductDetailsModel productDetails) {
-    return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.center,
-      spacing: 10,
-      alignment: WrapAlignment.start,
-      children: [
-         Wrap(
-          children: [
-            const Icon(
-              Icons.star,
-              color: Colors.amber,
-              size: 20,
-            ),
-            Text('${productDetails.product?.star ?? 0}'),
-          ],
-        ),
-        TextButton(onPressed: () {}, child: const Text('Reviews')),
-        GetBuilder<AddToWishListController>(
-          builder: (addToWishListController) {
-            if(addToWishListController.inProgress){
-              return Transform.scale(
-                scale: 0.4,
-                  child: const CircularProgressIndicator());
-            }
-            return  WishButton(
-
-              showAddWishList: true,onTap: (){
-                addToWishListController.addToWishList(widget.productId);
-            },
+                _buildAddToCartSection(productDetails)
+              ],
             );
-          }
-        ),
-      ],
-    );
-  }
-
-  Widget _builtitemCount() {
-    return ItemCount(
-      color: AppColores.primaryColor,
-      initialValue: _counterValue,
-      minValue: 1,
-      maxValue: 20,
-      decimalPlaces: 0,
-      onChanged: (value) {
-        _counterValue = value as int;
-        setState(() {});
-      },
+          }),
     );
   }
 
@@ -219,56 +154,118 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-          color: AppColores.primaryColor.withOpacity(0.1),
-          borderRadius: const BorderRadius.only(topRight:Radius.circular(16) ,
-              topLeft:Radius.circular(16) )
-      ),
+          color:AppColores.primaryColor.withOpacity(0.1),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          )),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _PriceWidget(productDetails),
+          _buildPriceWidget(productDetails),
           SizedBox(
-              width: 120,
-              child: GetBuilder<AddToCartController>(
-
-                builder: (addToCartController) {
-                  if(addToCartController.inProgress){
-                    return const CenterdCircularProgressIndicator();
-                  }
-                  return ElevatedButton(
-                    onPressed: () {
-                      CartModel cartModel =CartModel(productId:widget.productId, color: _selectedColor??'', size: _selectedSize ?? '', quantity: _counterValue);
-                      addToCartController.addToCart(cartModel);
-                      addToCartController.addToCart(cartModel).then((result) {
-                        if (result) {
-                          showSnackMassage(context, 'Added to cart');
-                        } else {
-                          showSnackMassage(
-                              context, addToCartController.errorMessage);
-                        }
-                      });
-                    },
-                    child: const Text('Add to Cart'),
-                  );
+            width: 120,
+            child: GetBuilder<AddToCartController>(
+              builder: (addToCartController) {
+                if (addToCartController.inProgress) {
+                  return const CenterdCircularProgressIndicator();
                 }
-              ))
+
+                return ElevatedButton(
+                  onPressed: () {
+                    CartModel cartModel = CartModel(
+                      productId: widget.productId,
+                      color: _selectedColor ?? '',
+                      size: _selectedSize ?? '',
+                      quantity: _counterValue,
+                    );
+
+                    addToCartController.addToCart(cartModel).then((result) {
+                      if (result) {
+                        showSnackMassage(context, 'Added to cart');
+                      } else {
+                        showSnackMassage(
+                            context, addToCartController.errorMessage);
+                      }
+                    });
+                  },
+                  child: const Text('Add to Cart'),
+                );
+              },
+            ),
+          )
         ],
       ),
     );
   }
 
-  Widget _PriceWidget(ProductDetailsModel productDetails) {
-    return  Column(
+  Widget _buildPriceWidget(ProductDetailsModel productDetails) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(' Price',style: TextStyle(fontWeight:
-        FontWeight.bold,fontSize: 24,color: Colors.grey),),
-        Text('\$${productDetails.product?.price?? 0}',style: const TextStyle(
-          fontSize: 24,
-          color: AppColores.primaryColor,
-          fontWeight: FontWeight.bold,
-        ),)
+        const Text(
+          'Price',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+        ),
+        Text(
+          '\$${productDetails.product?.price ?? 0}',
+          style: const TextStyle(
+              fontSize: 24,
+              color: AppColores.primaryColor,
+              fontWeight: FontWeight.bold),
+        ),
       ],
     );
   }
-}
 
+  Widget _buildReviewSection(ProductDetailsModel productDetails) {
+    return Wrap(
+      spacing: 5,
+      alignment: WrapAlignment.start,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: [
+        Wrap(
+          children: [
+            const Icon(
+              Icons.star,
+              color: Colors.amber,
+              size: 20,
+            ),
+            Text('${productDetails.product?.star ?? 0}')
+          ],
+        ),
+        TextButton(onPressed: () {}, child: const Text('Reviews')),
+        GetBuilder<AddToWishListController>(
+          builder: (addToWishListController) {
+            if (addToWishListController.inProgress) {
+              return Transform.scale(
+                  scale: 0.4, child: const CircularProgressIndicator());
+            }
+
+            return WishButton(
+              showAddToWishlist: true,
+              isSelected: true,
+              onTap: () {
+                addToWishListController.addToWishList(widget.productId);
+              },
+            );
+          },
+        )
+      ],
+    );
+  }
+
+  Widget _buildCounter() {
+    return ItemCount(
+      initialValue: _counterValue,
+      minValue: 1,
+      maxValue: 20,
+      decimalPlaces: 0,
+      color: AppColores.primaryColor,
+      onChanged: (value) {
+        _counterValue = value as int;
+        setState(() {});
+      },
+    );
+  }
+}

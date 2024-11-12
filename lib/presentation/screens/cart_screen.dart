@@ -1,7 +1,9 @@
 import 'package:counter_button/counter_button.dart';
+import 'package:ecommerceapp/presentation/state_holders/cart_list_controller%20(1).dart';
 import 'package:ecommerceapp/presentation/state_holders/main_bottom_nav_bar_cntroller.dart';
 import 'package:ecommerceapp/presentation/utility/app_color.dart';
 import 'package:ecommerceapp/presentation/utility/assets_path.dart';
+import 'package:ecommerceapp/presentation/widgets/centered_circular_progress.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -18,6 +20,13 @@ class CartListScreen extends StatefulWidget {
 }
 
 class _CartListScreenState extends State<CartListScreen> {
+ @override
+  void initState() {
+    super.initState();
+    Get.find<CartListController>().getCartList();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -34,23 +43,31 @@ class _CartListScreenState extends State<CartListScreen> {
               },
               icon: const Icon(Icons.arrow_back_ios_new_sharp)),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (contex, index) {
-                    return const CartProductItem();
-                  }),
-            ),
-            _buildCheckutWidget()
-          ],
+        body: GetBuilder<CartListController>(
+          builder: (cartListController) {
+            if(cartListController.inProgress){
+              return const CenterdCircularProgressIndicator();
+            }
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: cartListController.cartList.length,
+                      itemBuilder: (contex, index) {
+                        return  CartProductItem
+                          (cartItem: cartListController.cartList[index],);
+                      }),
+                ),
+                _buildCheckutWidget(cartListController.totalPrice)
+              ],
+            );
+          }
         ),
       ),
     );
   }
 
-  Widget _buildCheckutWidget() {
+  Widget _buildCheckutWidget(double totalPrice) {
     return Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -61,7 +78,7 @@ class _CartListScreenState extends State<CartListScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _totalPriceWidget(),
+                _totalPriceWidget(totalPrice),
                 SizedBox(
                     width: 100,
                     child: ElevatedButton(
@@ -73,12 +90,12 @@ class _CartListScreenState extends State<CartListScreen> {
           );
   }
 
-  Widget _totalPriceWidget() {
-    return const Column(
+  Widget _totalPriceWidget(double price) {
+    return  Column(
                 children: [
                   Text('Total Price',style: TextStyle(fontWeight:
                   FontWeight.bold,fontSize: 24,color: Colors.grey),),
-                  Text('\$12000',style: TextStyle(
+                  Text('\$$price',style: TextStyle(
                     fontSize: 24,
                     color: AppColores.primaryColor,
                     fontWeight: FontWeight.bold,

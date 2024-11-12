@@ -89,7 +89,8 @@ class NetworkCaller {
     }
   }
 
-  static void _gotoSignInScreen() {
+  static Future<void> _gotoSignInScreen() async {
+    await UserAuthController.clearUserData();
     getX.Get.to(() => const EmailVarificationScreen());
   }
 }

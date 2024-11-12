@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 
+import '../../data/models/cart_item.dart';
 import '../utility/app_color.dart';
 import '../utility/assets_path.dart';
 
 class CartProductItem extends StatefulWidget {
-  const CartProductItem({super.key});
-
+  const CartProductItem({super.key, required this.cartItem});
+  final CartItemModel cartItem;
   @override
   State<CartProductItem> createState() => _CartProductItemState();
 }
@@ -51,8 +52,8 @@ class _CartProductItemState extends State<CartProductItem> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "\$100",
+                     Text(
+                      "\$${widget.cartItem.product?.price ?? 0}",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
@@ -66,15 +67,14 @@ class _CartProductItemState extends State<CartProductItem> {
   }
 
   Wrap _builtColorAndSize() {
-    return const Wrap(
+    return  Wrap(
                               spacing: 16,
                               children: [
-                                Text(
-                                  'Color: Red',
-                                  style: TextStyle(color: Colors.black54),
+                                Text("color:${widget.cartItem.color}",
+                                  style: const TextStyle(color: Colors.black54),
                                 ),
-                                Text('Size: XL',
-                                    style: TextStyle(color: Colors.black54))
+                                Text('Size: ${widget.cartItem.size?? ""}',
+                                    style: const TextStyle(color: Colors.black54))
                               ],
                             );
   }
@@ -93,16 +93,16 @@ class _CartProductItemState extends State<CartProductItem> {
                   );
   }
 
-  Widget _buildProductName() {
+    Widget _buildProductName() {
     return Text(
-                              maxLines: 1,
-                              'Nike Shoe 212451512',
-                              style: TextStyle(
-                                  overflow: TextOverflow.ellipsis,
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600),
-                            );
+      widget.cartItem.product?.title ?? "",
+      maxLines: 1,
+      style: const TextStyle(
+          overflow: TextOverflow.ellipsis,
+          fontSize: 16,
+          color: Colors.black,
+          fontWeight: FontWeight.w600),
+    );
   }
 
   Widget _buildProductImg() {

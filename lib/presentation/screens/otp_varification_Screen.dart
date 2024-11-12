@@ -1,13 +1,15 @@
+import 'package:ecommerceapp/presentation/screens/HomeScreen.dart';
 import 'package:ecommerceapp/presentation/state_holders/verify_otp_controller.dart';
 import 'package:ecommerceapp/presentation/utility/app_color.dart';
 import 'package:ecommerceapp/presentation/widgets/snack_massege.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
+import '../state_holders/read_profile_controller.dart';
 import '../widgets/app_logo.dart';
 import '../widgets/centered_circular_progress.dart';
 import 'complete_profile_Screen.dart';
+import 'main_bottom_nav_bar_screen.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   final String email;
@@ -51,6 +53,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     onPressed: () async {
                       final result = await verifyOtpController.verifyOtp(
                           widget.email, _otpTEController.text);
+                        print(result);
                       if (result) {
                         // TODO: Pending in next 30th May, 2024
                         // 1. If success, then call another api named "readProfile"
@@ -59,11 +62,17 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         //    Complete profile screen, then move to home page
                         //    a. Create complete profile controller
                         // 3. Otherwise back to the home page
-                        Get.to(() => const CompleteProfileScreen());
+                        GetBuilder<ReadProfileController>(
+                            builder: (readProfileController) {
+                              if(readProfileController.inProgress) {
+                                return CenterdCircularProgressIndicator();
+                              }
+                              return Text('Loading');
+                            }
+                        );
                       } else {
                         if (mounted) {
-                          showSnackMassage(
-                              context, verifyOtpController.errorMessage);
+                          showSnackMassage(context, verifyOtpController.errorMessage);
                         }
                       }
                     },
