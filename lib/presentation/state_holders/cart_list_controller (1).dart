@@ -77,13 +77,5 @@ class CartListController extends GetxController {
     return isSuccess;
   }
 
-  double get _totalPrice {
-    double total = 0;
-    for (CartItemModel cartItem in _cartList) {
-      total+=(cartItem.qty ?? 1)* (double.tryParse(cartItem.product?.price??'0')
-          ??0);
-  }
-    return
-    total;
-  }
+
 }

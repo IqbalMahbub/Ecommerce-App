@@ -1,15 +1,11 @@
-
-
-import 'package:ecommerceapp/presentation/state_holders/user_auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-
 import '../../data/models/network_responce.dart';
 import '../../data/network_caller/network_caller.dart';
 import '../../data/utility/urls.dart';
-import '../screens/HomeScreen.dart';
 import '../screens/complete_profile_Screen.dart';
+import '../screens/main_bottom_nav_bar_screen.dart';
 
 class ReadProfileController extends GetxController {
   bool _inProgress = false;
@@ -27,14 +23,15 @@ class ReadProfileController extends GetxController {
       url: Urls.readProfile(),
     );
     if (response.isSuccess) {
-      await UserAuthController.saveUserToken(response.responseData['data']);
       profileData=response.responseData['data'];
+      print(profileData);
+
      if(profileData==null){
        Get.to(() => const CompleteProfileScreen());
        print("goto complete screen");
      } else {
        print("goto home screen");
-       Get.offAll(() => const homeScreen());
+       Get.offAll(() => const MainBottomNavBarScreen());
      }
     } else {
       _errorMessage = response.errorMassage!;

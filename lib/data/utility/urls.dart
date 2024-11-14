@@ -10,6 +10,7 @@ class Urls {
 
   static String productDetails(int productId) => '$_baseUrl/ProductDetailsById/$productId';
   static const String addToCart = '$_baseUrl/CreateCartList';
+  static const String createPtofile = '$_baseUrl/CreateProfile';
 
   static verifyEmail(String email) => '$_baseUrl/UserLogin/$email';
 
@@ -18,6 +19,7 @@ class Urls {
 
 
   static String createWishList(int productId) => '$_baseUrl/CreateWishList/$productId';
+  static String createInvoice = '$_baseUrl/InvoiceCreate';
 
   static const String getWishList = '$_baseUrl/ProductWishList';
 }

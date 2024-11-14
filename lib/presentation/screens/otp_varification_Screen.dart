@@ -62,14 +62,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         //    Complete profile screen, then move to home page
                         //    a. Create complete profile controller
                         // 3. Otherwise back to the home page
-                        GetBuilder<ReadProfileController>(
-                            builder: (readProfileController) {
-                              if(readProfileController.inProgress) {
-                                return CenterdCircularProgressIndicator();
-                              }
-                              return Text('Loading');
-                            }
-                        );
+                        final readProfileController = ReadProfileController();
+                          await readProfileController.readProfile();
                       } else {
                         if (mounted) {
                           showSnackMassage(context, verifyOtpController.errorMessage);

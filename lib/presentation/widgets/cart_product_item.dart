@@ -1,5 +1,8 @@
+import 'package:ecommerceapp/presentation/state_holders/cart_list_controller%20(1).dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 
 import '../../data/models/cart_item.dart';
@@ -14,7 +17,13 @@ class CartProductItem extends StatefulWidget {
 }
 
 class _CartProductItemState extends State<CartProductItem> {
-    int _counterValue = 1;
+   late  int _counterValue ;
+    @override
+  void initState() {
+    super.initState();
+    _counterValue= widget.cartItem.qty!;
+
+  }
   @override
   Widget build(BuildContext context) {
     return  Card(
@@ -54,7 +63,7 @@ class _CartProductItemState extends State<CartProductItem> {
                   children: [
                      Text(
                       "\$${widget.cartItem.product?.price ?? 0}",
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
                           color: AppColores.primaryColor),
@@ -89,6 +98,9 @@ class _CartProductItemState extends State<CartProductItem> {
                     onChanged: (value) {
                       _counterValue = value as int;
                       setState(() {});
+                     Get.find<CartListController>(). changeProductQuantity
+                      (widget.cartItem.id!,
+                      _counterValue);
                     },
                   );
   }

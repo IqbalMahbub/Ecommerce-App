@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'package:ecommerceapp/presentation/screens/email_varificationScreen.dart';
 import 'package:ecommerceapp/presentation/state_holders/user_auth_controller.dart';
-import 'package:get/get.dart' as getX;
+import 'package:get/get.dart' as getx;
 import 'package:http/http.dart';
 import 'dart:developer';
 import '../models/network_responce.dart';
 
 class NetworkCaller {
   static Future<NetworkResponse> getRequest(
-      {required String url, bool formAuth = false}) async {
+      {required String url, bool fromAuth = false}) async {
     try {
       log(url);
-      log( UserAuthController.accessToken);
+      log(UserAuthController.accessToken);
       final Response response = await get(
         Uri.parse(url),
         headers: {
@@ -22,12 +22,15 @@ class NetworkCaller {
       log(response.statusCode.toString());
       log(response.body.toString());
       if (response.statusCode == 200) {
-        final decodetData = jsonDecode(response.body);
+        final decodedData = jsonDecode(response.body);
         return NetworkResponse(
             responseCode: response.statusCode,
             isSuccess: true,
-            responseData: decodetData);
+            responseData: decodedData);
       } else if (response.statusCode == 401) {
+        if (!fromAuth) {
+          _goToSignInScreen();
+        }
         return NetworkResponse(
           responseCode: response.statusCode,
           isSuccess: false,
@@ -41,10 +44,7 @@ class NetworkCaller {
     } catch (e) {
       log(e.toString());
       return NetworkResponse(
-        responseCode: -1,
-        isSuccess: false,
-        errorMassage: e.toString(),
-      );
+          responseCode: -1, isSuccess: false, errorMassage: e.toString());
     }
   }
 
@@ -52,23 +52,24 @@ class NetworkCaller {
       {required String url, Map<String, dynamic>? body}) async {
     try {
       log(url);
-      log( UserAuthController.accessToken);
+      log(UserAuthController.accessToken);
+      log(body.toString());
       final Response response = await post(Uri.parse(url),
           headers: {
             'accept': 'application/json',
             'token': UserAuthController.accessToken
           },
-          body: jsonEncode(body));
+          body: body);
       log(response.statusCode.toString());
       log(response.body.toString());
       if (response.statusCode == 200) {
-        final decodetData = jsonDecode(response.body);
+        final decodedData = jsonDecode(response.body);
         return NetworkResponse(
             responseCode: response.statusCode,
             isSuccess: true,
-            responseData: decodetData);
+            responseData: decodedData);
       } else if (response.statusCode == 401) {
-        _gotoSignInScreen();
+        _goToSignInScreen();
         return NetworkResponse(
           responseCode: response.statusCode,
           isSuccess: false,
@@ -82,15 +83,19 @@ class NetworkCaller {
     } catch (e) {
       log(e.toString());
       return NetworkResponse(
-        responseCode: -1,
-        isSuccess: false,
-        errorMassage: e.toString(),
-      );
+          responseCode: -1, isSuccess: false, errorMassage: e.toString());
     }
   }
 
-  static Future<void> _gotoSignInScreen() async {
+  static Future<void> _goToSignInScreen() async {
+    // Navigator.push(
+    //   CraftyBay.navigationKey.currentState!.context,
+    //   MaterialPageRoute(
+    //     builder: (context) => const EmailVerificationScreen(),
+    //   ),
+    // );
+
     await UserAuthController.clearUserData();
-    getX.Get.to(() => const EmailVarificationScreen());
+    getx.Get.to(() => const EmailVarificationScreen());
   }
 }
