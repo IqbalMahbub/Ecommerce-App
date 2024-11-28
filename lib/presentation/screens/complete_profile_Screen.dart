@@ -1,7 +1,7 @@
 import 'package:ecommerceapp/data/models/completeProfile_model.dart';
 import 'package:ecommerceapp/presentation/screens/HomeScreen.dart';
 import 'package:ecommerceapp/presentation/state_holders/compleate_profile_controller.dart';
-import 'package:ecommerceapp/presentation/utility/app_color.dart';
+import '../../../../my_app/lib/utilis/app_color.dart';
 import 'package:ecommerceapp/presentation/widgets/centered_circular_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

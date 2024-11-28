@@ -2,7 +2,7 @@ import 'package:counter_button/counter_button.dart';
 import 'package:ecommerceapp/presentation/screens/checkout_screen.dart';
 import 'package:ecommerceapp/presentation/state_holders/cart_list_controller%20(1).dart';
 import 'package:ecommerceapp/presentation/state_holders/main_bottom_nav_bar_cntroller.dart';
-import 'package:ecommerceapp/presentation/utility/app_color.dart';
+import '../../../../my_app/lib/utilis/app_color.dart';
 import 'package:ecommerceapp/presentation/utility/assets_path.dart';
 import 'package:ecommerceapp/presentation/widgets/centered_circular_progress.dart';
 import 'package:flutter/cupertino.dart';
@@ -104,6 +104,6 @@ class _CartListScreenState extends State<CartListScreen> {
                     fontWeight: FontWeight.bold,
                   ),)
                 ],
-              );
+              );  
   }
 }

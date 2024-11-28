@@ -1,4 +1,4 @@
-import 'package:ecommerceapp/presentation/utility/app_color.dart';
+import '../../../../my_app/lib/utilis/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

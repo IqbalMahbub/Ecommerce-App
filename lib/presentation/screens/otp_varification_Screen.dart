@@ -1,6 +1,6 @@
 import 'package:ecommerceapp/presentation/screens/HomeScreen.dart';
 import 'package:ecommerceapp/presentation/state_holders/verify_otp_controller.dart';
-import 'package:ecommerceapp/presentation/utility/app_color.dart';
+import '../../../../my_app/lib/utilis/app_color.dart';
 import 'package:ecommerceapp/presentation/widgets/snack_massege.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

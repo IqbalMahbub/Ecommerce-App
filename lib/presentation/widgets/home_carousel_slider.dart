@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/slider_data.dart';
-import '../utility/app_color.dart';
+import '../../../../my_app/lib/utilis/app_color.dart';
 class HomeCaroselSlider extends StatefulWidget {
   const HomeCaroselSlider({
     super.key,

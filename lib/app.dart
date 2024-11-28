@@ -1,6 +1,6 @@
 import 'package:ecommerceapp/controller_binder.dart';
 import 'package:ecommerceapp/presentation/screens/splash_screen.dart';
-import 'package:ecommerceapp/presentation/utility/app_color.dart';
+import '../../my_app/lib/utilis/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../utility/app_color.dart';
+import '../../../../my_app/lib/utilis/app_color.dart';
 
 class WishButton extends StatelessWidget {
   const WishButton(

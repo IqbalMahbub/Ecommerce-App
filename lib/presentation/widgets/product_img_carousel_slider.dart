@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../utility/app_color.dart';
+import '../../../../my_app/lib/utilis/app_color.dart';
 
 class ProductImgCaroselSlider extends StatefulWidget {
   const ProductImgCaroselSlider({

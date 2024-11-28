@@ -6,7 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 
 import '../../data/models/cart_item.dart';
-import '../utility/app_color.dart';
+import '../../../../my_app/lib/utilis/app_color.dart';
 import '../utility/assets_path.dart';
 
 class CartProductItem extends StatefulWidget {

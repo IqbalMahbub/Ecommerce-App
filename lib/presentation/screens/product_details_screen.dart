@@ -14,7 +14,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 
 import '../state_holders/main_bottom_nav_bar_cntroller.dart';
-import '../utility/app_color.dart';
+import '../../../../my_app/lib/utilis/app_color.dart';
 import '../widgets/product_img_carousel_slider.dart';
 import '../widgets/size_picker.dart';
 

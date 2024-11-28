@@ -1,5 +1,5 @@
 import 'package:ecommerceapp/presentation/state_holders/main_bottom_nav_bar_cntroller.dart';
-import 'package:ecommerceapp/presentation/utility/app_color.dart';
+import '../../../../my_app/lib/utilis/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

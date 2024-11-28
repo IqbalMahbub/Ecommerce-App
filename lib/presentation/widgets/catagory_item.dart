@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../data/models/category.dart';
 import '../screens/product_list_screen.dart';
-import '../utility/app_color.dart';
+import '../../../../my_app/lib/utilis/app_color.dart';
 
 class CatagoryItem extends StatelessWidget {
   const CatagoryItem({
